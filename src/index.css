@@ -1,1 +1,35 @@
 @import 'tailwindcss';
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-VariableFont_opsz\,wght.ttf');
+	font-weight: 100 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('./assets/fonts/Inter-Italic-VariableFont_opsz\,wght.ttf');
+	font-weight: 100 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+body {
+	font-family: 'Inter';
+	background-color: #2c2c2c;
+}
+
+input {
+	outline: none;
+	transition: all;
+	transition-duration: 150ms;
+	
+}
+
+textarea {
+	outline: none;
+	transition: all;
+	transition-duration: 150ms;
+}

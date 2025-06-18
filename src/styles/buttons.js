@@ -1,0 +1,1 @@
+export const primaryButton = 'px-4 py-2 min-w-36 font-bold border rounded-full cursor-pointer hover:bg-amber-50/20 focus:outline-amber-400 transition-all duration-150'

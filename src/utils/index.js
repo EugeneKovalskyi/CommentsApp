@@ -1,0 +1,5 @@
+export * from './sortComments'
+export * from './addTag'
+export { default as getXhtmlFromText } from './getXhtmlFromText'
+export { default as getFiles } from './getFiles'
+export { default as getImageDimensions } from './getImageDimensions'

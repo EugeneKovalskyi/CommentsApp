@@ -14,7 +14,6 @@ export default (updateComments, updateAuthData) => {
       name: 'Eugene Kovalskyi',
       email: 'tarantul.battlefield@gmail.com',
       homePage: 'https://github.com/EugeneKovalskyi',
-      captcha: 'CAPTcha',
       text: 'Hello, my name is Eugene, I`m from Cherkassy',
     },
   })

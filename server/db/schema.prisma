@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            Int         @id @default(autoincrement())
+  name          String      @unique(map: "sqlite_autoindex_users_1")
+  email         String      @unique(map: "sqlite_autoindex_users_2")
+  homePage      String?     @map("home_page")
+  comments      Comment[]
+
+  @@map("users")
+  @@index(name)
+}
+
+model Comment {
+  id            Int         @id @default(autoincrement())
+  text          String
+  date          DateTime    @default(now())
+  imgs          Img[]
+  txts          Txt[]
+  userId        Int         @map("user_id")
+  user          User        @relation(fields: [userId], references: [id], onDelete: NoAction)
+  parentId      Int?        @map("parent_id")
+  replies       Comment[]   @relation("parent_to_replies")
+  reply         Comment?    @relation("parent_to_replies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+
+  @@map("comments")
+}
+
+model Img {
+  id            Int         @id @default(autoincrement())
+  name          String
+  url           String      @unique(map: "sqlite_autoindex_imgs_1")
+  commentId     Int        @map("comment_id") 
+  comment       Comment?    @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("imgs")
+}
+
+model Txt {
+  id         Int            @id @default(autoincrement())
+  name       String
+  url        String         @unique(map: "sqlite_autoindex_txts_1")
+  commentId  Int           @map("comment_id") 
+  comment    Comment?       @relation(fields: [commentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("txts")
+}

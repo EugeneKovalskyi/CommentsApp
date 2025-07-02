@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  """User ID"""
+  id: ID!
+}
+
+input AuthInput {
+  """User email"""
+  email: String!
+
+  """User home page"""
+  homePage: String
+
+  """User name"""
+  name: String!
+}
+
+type Mutation {
+  """Return user id and register user if not exists."""
+  auth(data: AuthInput!): Auth!
+}
+
+type Query {
+  root: String!
+}

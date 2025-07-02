@@ -1,21 +1,25 @@
+import homeSrc from '#public/home.svg'
 import { useState } from 'react'
 
 export default function Header({ 
-  name, 
-  date, 
-  email, 
-  toggleAnswerForm
+  user,
+  date,
+  connectToReplies
 }) {
 
   return (
     <div className='relative px-5 py-3 rounded-t-md bg-amber-50/10'>
-      <span className='font-bold'>{name}</span>
+      <span className='font-bold'>{user.name}</span>
       <span className='mx-4 text-amber-50/50'>|</span>
+
       <Date date={date} />
       <span className='mx-4 text-amber-50/50'>|</span>
-      <AnswerBtn toggleAnswerForm={toggleAnswerForm} />
+
+      <ReplyBtn connectToReplies={connectToReplies} />
       <span className='mx-4 text-amber-50/50'>|</span>
-      <Email email={email} />
+
+      <HomePage homePage={user.homePage} />
+      <Email email={user.email} />
     </div>
   )
 }
@@ -29,21 +33,31 @@ function Date({ date }) {
 
   return (
     <span className='text-amber-50/70'>
-      {
-        DMY + ' at ' + hours + ':' + minutes
-      }
+      {DMY + ' at ' + hours + ':' + minutes}
     </span>
   )
 }
 
-function AnswerBtn({ toggleAnswerForm }) {
+function ReplyBtn({ connectToReplies }) {
   return (
     <button
       className='text-amber-50/70 cursor-pointer hover:underline'
-      onClick={toggleAnswerForm}
+      onClick={connectToReplies}
     >
-      Answer
+      Reply
     </button>
+  )
+}
+
+function HomePage({ homePage }) {
+  return (
+      <a 
+      className='mr-2 p-1 rounded-md text-amber-50/70 cursor-pointer hover:bg-amber-50/10'
+        href={homePage}
+        target='_blank'
+      >
+        <img className='inline w-5' src={homeSrc} alt="HomePage" />
+      </a>
   )
 }
 
@@ -60,7 +74,7 @@ function Email({ email }) {
         </button>
       }
       <span
-        className='px-2.5 py-2 rounded-full text-amber-50/70 cursor-pointer hover:bg-amber-50/10'
+        className='px-1.5 py-1 rounded-md text-amber-50/70 cursor-pointer hover:bg-amber-50/10'
         onClick={() => {
           navigator.clipboard.writeText(email)
           setIsEmailPopup(true)
@@ -72,3 +86,4 @@ function Email({ email }) {
     </>
   )
 }
+

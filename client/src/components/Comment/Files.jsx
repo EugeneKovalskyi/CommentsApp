@@ -1,5 +1,6 @@
 import Lightbox from 'yet-another-react-lightbox'
 import 'yet-another-react-lightbox/styles.css'
+import txtSrc from '#public/txt.svg'
 import { useMemo, useState } from 'react'
 
 export default function Files({ imgs, txts }) {
@@ -7,7 +8,7 @@ export default function Files({ imgs, txts }) {
 	const [ currentIndex, setCurrentIndex ] = useState(0)
 
 	const slides = useMemo(() => imgs.map(img => ({
-		src: img.src,
+		src: img.url,
 		alt: img.name,
 		width: img.width,
 		height: img.height,
@@ -26,7 +27,8 @@ export default function Files({ imgs, txts }) {
 						>
 							<img 
 								className='rounded-lg shadow-xl cursor-pointer hover:outline-2 hover:scale-105 outline-amber-50/50 transition-transform duration-300'
-								src={img.src}
+								key={img.id}
+								src={img.url}
 								alt={img.name}
 								width={img.width}
 								height={img.height}
@@ -58,10 +60,15 @@ export default function Files({ imgs, txts }) {
 							title={txt.name}
 						>
 							<a 
-								className='block ml-2 px-4 py-1 truncate border rounded-md border-amber-50/20 hover:bg-amber-50/10 hover:underline transition-all duration-150'
-								href={txt.href}
+								className='block ml-2 px-4 pt-1 pb-0.5 truncate border rounded-md border-amber-50/20 hover:bg-amber-50/10 transition-all duration-150'
+								href={txt.url}
 								download
 								>
+								<img 
+									className='inline mr-1 pb-0.5 w-5'
+									src={txtSrc} 
+									alt='TXT' 
+								/>
 								{txt.name}
 							</a>
 						</div>

@@ -1,38 +1,56 @@
-import { useEffect } from 'react'
-import { useComment } from '#hooks'
+import { HOST } from '#constants'
 
 import Header from './Header'
-import AnswerForm from './AnswerForm'
 import Files from './Files'
-import AnswersBtn from './AnswersBtn'
+import Replies from './Replies'
+import RepliesBtn from './RepliesBtn'
 
-export default function Comment({ comment, authData, updateComments }) {
-	// const
+import { useEffect, useState } from 'react'
+import { useComment } from '#hooks'
+
+export default function Comment({ socket, comment, updateComments }) {
 	const {
+		xhtml,
 		xhtmlContainerRef,
-		isAnswersVisible,
-		isAnswerFormVisible,
-		toggleAnswers,
-		toggleAnswerForm
-	} = useComment()
+		isRepliesVisible,
+		isReplyFormVisible,
+		toggleReplies,
+		torggleReplyForm,
+		connectToReplies,
+	} = useComment(
+		socket,
+		comment,
+		updateComments
+	)
+
+	// const [ replies, setReplies ] = useState([])
 
 	useEffect(() => {
-		if (xhtmlContainerRef.current) {
-			xhtmlContainerRef.current.innerHTML = ''
-			xhtmlContainerRef.current.append(comment.xhtml)
+		if(xhtmlContainerRef.current) {
+			// const getReplies = async () => {
+			// 	const response = await fetch(`${HOST}/${comment.id}`)
+			// 	const data = await response.json()
+				
+			// 	for (let i = 0; i < data.length; i++)
+			// 		data[i] = [...comment.coords, i]
+
+			// 	setReplies(data)
+			// }
+			// getReplies()
+			
+			xhtmlContainerRef.current?.append(xhtml)
 		}
-	}, [comment.xhtml])
+	}, [xhtmlContainerRef.current])
 
 	return (
-    <div className='my-5'>
-      <Header
-        name={comment.name}
-        date={new Date(comment.date)}
-				email={comment.email}
-				toggleAnswerForm={toggleAnswerForm}
-      />
+		<div className='my-5'>
+			<Header
+				user={comment.user}
+				date={new Date(comment.date)}
+				connectToReplies={connectToReplies}
+			/>
 
-      <div 
+			<div
 				className='p-4 whitespace-pre-wrap wrap-break-word border-b border-amber-50/10'
 				ref={xhtmlContainerRef}
 			/>
@@ -42,41 +60,26 @@ export default function Comment({ comment, authData, updateComments }) {
 				txts={comment.txts}
 			/>
 
-      { 
-				!!comment.answers.length 
-				&&
-				<AnswersBtn
-					answersNumber={comment.answers.length}
-					isAnswersVisible={isAnswersVisible}
-					toggleAnswers={toggleAnswers}
+			{
+				!!comment.replies?.length 
+				&& 
+				<RepliesBtn
+					repliesNumber={comment.replies.length}
+					isRepliesVisible={isRepliesVisible}
+					toggleReplies={toggleReplies}
 				/>
 			}
-			
-			<div className='ml-8 mt-6'>
-				{
-					isAnswersVisible
-					&&
-					comment.answers.map(answer => (
-						<Comment 
-							key={answer.id}
-							comment={answer}
-							authData={authData}
-							updateComments={updateComments}
-						/>
-					))
-				}
-				{
-					isAnswerFormVisible 
-					&&
-					<AnswerForm
-						comment={comment}
-						authData={authData}
-						updateComments={updateComments}
-						toggleAnswers={toggleAnswers}
-    				toggleAnswerForm={toggleAnswerForm}
-					/>
-      	}
-			</div>
-    </div>
-  )
+			{
+				isRepliesVisible 
+				&& 
+				<Replies
+					socket={socket}
+					parent={comment}
+					isReplyFormVisible={isReplyFormVisible}
+					updateComments={updateComments}
+					toggleReplies={toggleReplies}
+				/>
+			}
+		</div>
+	)
 }

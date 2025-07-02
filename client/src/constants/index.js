@@ -1,3 +1,6 @@
+export const HOST = 'http://localhost:3001'
+export const GRAPHQL = HOST + '/graphql'
+export const WS_HOST = 'ws://localhost:3001'
 export const MAX_COMMENTS = 25
 export const MAX_TAGS_NESTING_DEPTH = 5
 export const MAX_FILES_NUMBER = 5
@@ -27,42 +30,6 @@ export const TEXTAREA_BUTTONS = [
 	}
 ]
 
-export const testData = [
-  {
-    id: 1,
-    coords: [1],
-    name: 'Alex',
-    email: 'alex@gmail.com',
-    homePage: 'https://www.google.com/',
-    xhtml: 'Hello World!',
-    date: new Date(2025, 4, 25, 10, 45),
-    answers: [
-      {
-        id: 2,
-        coords: [1, 0],
-        name: 'Bob',
-        email: 'bob@gmail.com',
-        homePage: 'https://www.google.com/',
-        xhtml: 'Hello Alex! <script>XSS attack</script>',
-        date: new Date(2025, 4, 26, 11, 10),
-        answers: [],
-        imgs: [],
-        txts: []
-      },
-    ],
-    imgs: [],
-    txts: []
-  },
-  {
-    id: 3,
-    coords: [3],
-    name: 'Charlie',
-    email: 'charlie@gmail.com',
-    homePage: 'https://www.google.com/',
-    xhtml: 'Good day Alex!',
-    date: new Date(2025, 4, 26, 16, 5),
-    answers: [],
-    imgs: [],
-    txts: []
-  },
-]
+const test = `Start. <strong>Hello</strong> <i>my</i> <code>let name = 'Eugene'</code>, here is my <a href='https://github.com/EugeneKovalskyi' title="GitHub">GitHub</a>.
+<strong>I learn <code>JavaScript</code> 2 years.</strong>
+<script>It's XSS</script>. End.`

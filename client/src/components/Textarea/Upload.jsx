@@ -8,7 +8,7 @@ export default function Upload({ updateUploadedFiles }) {
 		<div className='flex-1 h-8 text-right'>
 			<label htmlFor={id}>
 				<img 
-					className='inline px-2 py-1 h-8 border-l cursor-pointer hover:bg-amber-50/10'
+					className='inline px-2 py-1 h-8 border-l cursor-pointer hover:bg-amber-50/10 transition-colors duration-150'
 					src={uploadSrc} 
 					alt="AddFile" 
 				/>
@@ -20,7 +20,7 @@ export default function Upload({ updateUploadedFiles }) {
 				type='file' 
 				accept='.jpg, .gif, .png, .txt' 
 				multiple
-				onChange={e => {console.log(e.target.files); updateUploadedFiles(e.target.files)}}
+				onChange={e => updateUploadedFiles(e.target.files)}
 			/>
 		</div>
 	)

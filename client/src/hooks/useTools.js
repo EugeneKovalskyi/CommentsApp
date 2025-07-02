@@ -1,14 +1,17 @@
 import { useState } from 'react'
-import { sortByCriterion } from '#utils/sortComments'
+import { sortComments } from '#utils'
 
 export default (updateComments) => {
   const [ sortingCriterion, setSortingCriterion ] = useState('date')
   const [ isDescSorting, setIsDescSorting ] = useState(true)
 
-  const handleSortByCriterion = (event) => {
+  const handleSortComments = (event) => {
     const criterion = event.target.value
+    
     setSortingCriterion(criterion)
-    updateComments(draft => sortByCriterion(draft, criterion, isDescSorting))
+    updateComments(draft => {
+      sortComments(draft, criterion, isDescSorting)
+    })
   }
 
   const handleChangeOrder = () => {
@@ -19,7 +22,7 @@ export default (updateComments) => {
 	return {
 		sortingCriterion,
 		isDescSorting,
-		handleSortByCriterion,
+		handleSortComments,
 		handleChangeOrder
 	}
 }

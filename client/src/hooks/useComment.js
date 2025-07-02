@@ -1,22 +1,43 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
+import { getXhtmlFromText } from '#utils'
 
-export default () => {
+export default (socket, comment) => {
+	const xhtml = useMemo(() => getXhtmlFromText(comment.text), [comment.text])
 	const xhtmlContainerRef = useRef(null)
-	const [ isAnswersVisible, setIsAnswersVisible ] = useState(false)
-	const [ isAnswerFormVisible, setIsAnswerFormVisible ] = useState(false)
+	const [ isRepliesVisible, setIsRepliesVisible ] = useState(false)
+	const [ isReplyFormVisible, setIsReplyFormVisible ] = useState(false)
+	
+	const toggleReplyForm = () => setIsReplyFormVisible(irfv => !irfv)
 
-	const toggleAnswers = (visibility) =>
-    setIsAnswersVisible(i => {
-			if (visibility === 'visible') return true
-			else return !i
-    })
-	const toggleAnswerForm = () => setIsAnswerFormVisible(i => !i)
+	const connectToReplies = () => {
+		const room = String(comment.id)
+
+		socket.emit('join', room)
+		setIsReplyFormVisible(true)
+		setIsRepliesVisible(true)
+	}
+
+	const toggleReplies = async () => {
+		const room = String(comment.id)
+
+		setIsRepliesVisible(irv => {
+			if (irv) {
+				setIsReplyFormVisible(false)
+				socket.emit('leave', room) 
+			} else
+				socket.emit('join', room)
+
+			return !irv
+		})
+	}
 	
 	return {
+		xhtml,
 		xhtmlContainerRef,
-		isAnswersVisible,
-		isAnswerFormVisible,
-		toggleAnswers,
-		toggleAnswerForm
+		isRepliesVisible,
+		isReplyFormVisible,
+		toggleReplies,
+		toggleReplyForm,
+		connectToReplies,
 	}
 }

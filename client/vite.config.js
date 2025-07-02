@@ -9,7 +9,8 @@ const __dirname = path.dirname(__filename);
 
 // https://vite.dev/config/
 export default defineConfig({
-  root: 'client/src',
+  root: 'src',
+
   build: {
     outDir: '../dist'
   },
@@ -21,12 +22,12 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '#components': path.resolve(__dirname, './client/src/components'),
-      '#constants': path.resolve(__dirname, './client/src/constants'),
-      '#hooks': path.resolve(__dirname, './client/src/hooks'),
-      '#utils': path.resolve(__dirname, './client/src/utils'),
-      '#styles': path.resolve(__dirname, './client/src/styles'),
-      '#public': path.resolve(__dirname, './client/public'),
+      '#components': path.resolve(__dirname, './src/components'),
+      '#constants': path.resolve(__dirname, './src/constants'),
+      '#hooks': path.resolve(__dirname, './src/hooks'),
+      '#utils': path.resolve(__dirname, './src/utils'),
+      '#styles': path.resolve(__dirname, './src/styles'),
+      '#public': path.resolve(__dirname, './public'),
     }
   }
 })

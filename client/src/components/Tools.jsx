@@ -4,7 +4,7 @@ import sortingOrderSrc from '#public/sorting-order.svg'
 export default function Tools({
   sortingCriterion,
   isDescSorting,
-  handleSortByCriterion,
+  handleSortComments,
   handleChangeOrder,
 }) {
   return (
@@ -14,7 +14,7 @@ export default function Tools({
         <select
           className='ml-1 px-2 py-1 rounded-md cursor-pointer hover:bg-amber-50/10'
           value={sortingCriterion}
-          onChange={handleSortByCriterion}
+          onChange={handleSortComments}
         >
           <option value='name'>name</option>
           <option value='date'>date</option>

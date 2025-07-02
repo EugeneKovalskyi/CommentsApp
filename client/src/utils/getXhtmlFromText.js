@@ -51,7 +51,3 @@ export default function getXhtmlFromText(
 
   return parentElem
 }
-
-const test = `Start. <strong>Hello</strong> <i>my</i> <code>let name = 'Eugene'</code>, here is my <a href='https://github.com/EugeneKovalskyi' title="GitHub">GitHub</a>.
-<strong>I learn <code>JavaScript</code> 2 years.</strong>
-<script>It's XSS</script>. End.`

@@ -1,30 +1,23 @@
-import { testData } from '#constants'
-
 import Form from './Form'
 import CommentsList from './CommentsList'
 
-import { useImmer } from 'use-immer'
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useApp } from '#hooks'
 
 export default function App() {
-  const [ comments, updateComments ] = useImmer(testData)
-  const [ authData, setAuthData ] = useState({
-    name: 'Eugene Kovalskyi',
-    email: 'tarantul.battlefield@gmail.com',
-  })
+	const { socket, comments, updateComments, initApp } = useApp()
+  
+	useEffect(() => initApp(), [])
 
-  return (
-    <div className='p-10 text-amber-50'>
-      <Form
-        updateComments={updateComments}
-        updateAuthData={setAuthData}
-      />
+	return (
+		<div className='p-10 text-amber-50'>
+			<Form updateComments={updateComments} />
 
-      <CommentsList
-        comments={comments}
-        authData={authData}
-        updateComments={updateComments}
-      />
-    </div>
-  )
+			<CommentsList
+				socket={socket}
+				comments={comments}
+				updateComments={updateComments}
+			/>
+		</div>
+	)
 }

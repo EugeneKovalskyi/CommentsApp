@@ -1,5 +1,6 @@
+export { default as useApp } from './useApp'
 export { default as useComment } from './useComment'
-export { default as useAnswerForm } from './useAnswerForm'
-export { default as useAuthForm } from './useAuthForm'
+export { default as useReplyForm } from './useReplyForm/index'
+export { default as useAuthForm } from './useAuthForm/index'
 export { default as useTools } from './useTools'
 export { default as useUploadFiles } from './useUploadFiles'

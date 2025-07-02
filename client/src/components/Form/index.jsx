@@ -5,9 +5,9 @@ import Input from './Input'
 import Textarea from '#components/Textarea'
 import { useAuthForm } from '#hooks'
 
-export default function Form({ updateComments, updateAuthData }) {
+export default function Form({ updateComments }) {
   const {
-      text,
+      formText,
       uploadedFiles,
 			register,
 			errors,
@@ -15,7 +15,7 @@ export default function Form({ updateComments, updateAuthData }) {
       updateUploadedFiles,
       handleSubmit,
 			addComment
-		} = useAuthForm(updateComments, updateAuthData)
+		} = useAuthForm(updateComments)
 
   return (
     <form
@@ -46,20 +46,20 @@ export default function Form({ updateComments, updateAuthData }) {
         placeholder='https://example.com/'
       />
 
-      <Input 
+      {/* <Input 
         title={ <img className='inline-block' alt="CAPTcha" />}
         register={register}
         name='captcha'
         options={{ required: 'is required *' }}
         error={errors.captcha}
-      />
+      /> */}
 
-      <div className='block mx-auto mt-4 w-11/12 '>
+      <div className='block mx-auto mt-4 w-11/12 text-left'>
         <span className='font-bold'>Text:</span>
         <div className='mt-2'>
           <Textarea
             styleType='comment'
-            text={text}
+            formText={formText}
             uploadedFiles={uploadedFiles}
             register={register}
             error={errors.text}

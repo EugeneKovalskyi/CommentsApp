@@ -1,7 +1,7 @@
-export function sortByCriterion(comments, criterion, isDescSorting) {
+export default (comments, criterion, isDescSorting) => {
   comments.sort((leftComment, rightComment) => {
-    let leftValue = leftComment[criterion]
-    let rightValue = rightComment[criterion]
+    let leftValue = leftComment.user[criterion]
+    let rightValue = rightComment.user[criterion]
 
     if (criterion === 'name' || criterion === 'email') {
       leftValue = leftValue.toLowerCase()

@@ -1,4 +1,4 @@
-export function addTagToTextarea(textareaRef, tagName, attributes) {
+export default function addTagToTextarea(textareaRef, tagName, attributes) {
   const textarea = textareaRef.current
   const from = textarea.selectionStart
   const to = textarea.selectionEnd
@@ -14,6 +14,9 @@ export function addTagToTextarea(textareaRef, tagName, attributes) {
     textarea.setRangeText(taggedText)
     textarea.selectionEnd = textarea.selectionStart += taggedText.length
   }
+
+  const addTagEvent = new Event('input', { bubbles: true });
+  textarea.dispatchEvent(addTagEvent);
 
   textarea.focus()
 }

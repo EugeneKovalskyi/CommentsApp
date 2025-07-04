@@ -24,9 +24,7 @@ export class RepliesGateway implements OnGatewayConnection, OnGatewayDisconnect 
 		@MessageBody() dto: PostReplyDTO
 	) {
 		const reply = await this.repliesService.postReply(dto)
-		const room = String(reply.parentId)
-
-		client.to(room).emit('get:reply', reply)
+		client.broadcast.emit(`get:reply:${reply.parentId}`, reply)
 
 		return {
 			id: reply.id,
@@ -34,19 +32,19 @@ export class RepliesGateway implements OnGatewayConnection, OnGatewayDisconnect 
 		}
 	}
 
-	@SubscribeMessage('join')
-	async joinRoom(
-		@ConnectedSocket() client: Socket,
-		@MessageBody() room: string) {
-			await client.join(room)
-			console.log(client.rooms)
-	}
+	// @SubscribeMessage('join')
+	// async joinRoom(
+	// 	@ConnectedSocket() client: Socket,
+	// 	@MessageBody() room: string) {
+	// 		await client.join(room)
+	// 		console.log(client.rooms)
+	// }
 
-	@SubscribeMessage('leave')
-	async leaveRoom(
-		@ConnectedSocket() client: Socket,
-		@MessageBody() room: string) {
-			await client.leave(room)
-			console.log(client.rooms)
-	}
+	// @SubscribeMessage('leave')
+	// async leaveRoom(
+	// 	@ConnectedSocket() client: Socket,
+	// 	@MessageBody() room: string) {
+	// 		await client.leave(room)
+	// 		console.log(client.rooms)
+	// }
 }

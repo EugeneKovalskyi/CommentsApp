@@ -1,45 +1,29 @@
-import { HOST, WS_HOST } from '#constants'
+import { HOST } from '#constants'
 
 import { useImmer } from 'use-immer'
-import { useMemo } from 'react'
-import { io } from "socket.io-client"
+import { useState } from 'react'
 import { localAuth } from '#utils'
 
 export default () => {
 	const [ comments, updateComments ] = useImmer([])
-  const socket = useMemo(() => io(WS_HOST, { transports: ['websocket'] }), [])
-
-	socket.on('connect', () => {
-		console.log('Connected: ', socket.id)
-	})
-	socket.on('disconnect', () => {
-		console.log('Disonnected: ', socket.id)
-	})
+	const [ commentsCount, setCommentsCount ] = useState(0)
 
 	const initApp = () => {
 		const getMainComments = async () => {
-			const response = await fetch(HOST)
+			const response = await fetch(`${HOST}?shown=0&criterion=date&order=desc`)
 			const data = await response.json()
 
-			console.log(data) //!!!
-
-      for (const comment of data) {
-        comment.coords = [comment.id]
-        for(let i = 0; i < comment.replies.length; i++) {
-          const reply = comment.replies[i]
-          reply.coords = [comment.id, i]
-        }
-      }
-			updateComments(() => data)
-		}
+			updateComments(() => data.comments)
+			setCommentsCount(data.count)
+    }
 
 		getMainComments()
     localAuth()
 	}
 
 	return {
-		socket,
 		comments,
+		commentsCount,
 		updateComments,
 		initApp
 	}

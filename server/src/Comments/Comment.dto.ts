@@ -23,3 +23,18 @@ export class PostCommentFiles {
 	@IsOptional()
 	txts?: IFile[]
 }
+
+export class CommentsQuery {
+	@IsString()
+	@IsNotEmpty()
+	criterion: string
+	
+	@IsString()
+	@IsNotEmpty()
+	order: string
+
+	@Type(() => Number)
+	@IsNumber()
+	@IsOptional()
+	shown?: number
+}

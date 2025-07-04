@@ -8,6 +8,7 @@ export class RepliesService {
 	constructor(private readonly prismaService: PrismaService) {}
 
 	async postReply(dto: PostReplyDTO): Promise<Comment> {
+
 		const { userId, parentId, text, imgs, txts } = dto
 		const reply = await this.prismaService.comment.create({
 			data: {

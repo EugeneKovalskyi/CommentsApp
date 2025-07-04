@@ -4,9 +4,8 @@ import { useState } from 'react'
 export default function Header({ 
   user,
   date,
-  connectToReplies
+  showRepliesAndForm
 }) {
-
   return (
     <div className='relative px-5 py-3 rounded-t-md bg-amber-50/10'>
       <span className='font-bold'>{user.name}</span>
@@ -15,10 +14,14 @@ export default function Header({
       <Date date={date} />
       <span className='mx-4 text-amber-50/50'>|</span>
 
-      <ReplyBtn connectToReplies={connectToReplies} />
+      <ReplyBtn showRepliesAndForm={showRepliesAndForm} />
       <span className='mx-4 text-amber-50/50'>|</span>
 
-      <HomePage homePage={user.homePage} />
+      {
+        user.homePage 
+        && 
+        <HomePage homePage={user.homePage} />
+      }
       <Email email={user.email} />
     </div>
   )
@@ -38,11 +41,11 @@ function Date({ date }) {
   )
 }
 
-function ReplyBtn({ connectToReplies }) {
+function ReplyBtn({ showRepliesAndForm }) {
   return (
     <button
       className='text-amber-50/70 cursor-pointer hover:underline'
-      onClick={connectToReplies}
+      onClick={showRepliesAndForm}
     >
       Reply
     </button>

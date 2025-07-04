@@ -16,6 +16,9 @@ input AuthInput {
 
   """User name"""
   name: String!
+
+  """CAPTCHA-tocken"""
+  tocken: String!
 }
 
 type Mutation {

@@ -6,9 +6,7 @@ import { ConfigService } from '@nestjs/config'
 export class S3Service {
 	private s3: S3Client
 
-	constructor(
-		private readonly configService: ConfigService,
-	) {
+	constructor(private readonly configService: ConfigService) {
 			this.s3 = new S3Client({
 			region: this.configService.getOrThrow('AWS_S3_REGION'),
 			credentials: {

@@ -4,6 +4,7 @@ import {
   Get, 
   Param, 
   Post, 
+  Query, 
   UploadedFiles, 
   UseInterceptors, 
 	UsePipes
@@ -12,6 +13,8 @@ import { CommentsService } from './Comments.service'
 import { ParseFormDataPipe } from 'src/pipes/ParseFormData.pipe'
 import { AnyFilesInterceptor } from '@nestjs/platform-express'
 import { PostCommentFiles, PostCommentDTO } from './Comment.dto'
+import { CommentsQueryPipe } from 'src/pipes/CommentsQuery.pipe'
+import type { QueryParams } from 'src/types/app.types'
 
 @Controller()
 export class CommentsController {
@@ -21,7 +24,6 @@ export class CommentsController {
 	@UsePipes(ParseFormDataPipe)
 	@UseInterceptors(AnyFilesInterceptor())
 	postComment(@Body() dto: PostCommentDTO, @UploadedFiles() files: PostCommentFiles) {
-		console.log(dto, files)
 		return this.commentsService.postComment(dto, files)
 	}
 
@@ -33,8 +35,9 @@ export class CommentsController {
 	}
 
 	@Get()
-	getMainComments() {
-		return this.commentsService.getMainComments()
+	@UsePipes(CommentsQueryPipe)
+	getMainComments(@Query() queryParams: QueryParams) {
+		return this.commentsService.getMainComments(queryParams)
 	}
 
 	@Get(':parentId')

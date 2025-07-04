@@ -1,43 +1,52 @@
+import { HOST } from '#constants'
+
 import { useMemo, useRef, useState } from 'react'
+import { useImmer } from 'use-immer'
 import { getXhtmlFromText } from '#utils'
 
-export default (socket, comment) => {
-	const xhtml = useMemo(() => getXhtmlFromText(comment.text), [comment.text])
+export default (id, text) => {
+	const xhtml = useMemo(() => getXhtmlFromText(text), [text])
 	const xhtmlContainerRef = useRef(null)
+	const [ replies, updateReplies ] = useImmer([])
 	const [ isRepliesVisible, setIsRepliesVisible ] = useState(false)
 	const [ isReplyFormVisible, setIsReplyFormVisible ] = useState(false)
-	
-	const toggleReplyForm = () => setIsReplyFormVisible(irfv => !irfv)
 
-	const connectToReplies = () => {
-		const room = String(comment.id)
+	const initComment = () => {
+		const getReplies = async () => {
+			const response = await fetch(`${HOST}/${id}`)
+			const data = await response.json()
 
-		socket.emit('join', room)
+			updateReplies(() => data)
+		}
+		getReplies()
+	}
+
+	const toggleReplyForm = () => {
+		setIsReplyFormVisible((irfv) => !irfv)
+		if (!replies.length) setIsRepliesVisible(false)
+	}
+
+	const showRepliesAndForm = () => {
 		setIsReplyFormVisible(true)
 		setIsRepliesVisible(true)
 	}
 
 	const toggleReplies = async () => {
-		const room = String(comment.id)
-
-		setIsRepliesVisible(irv => {
-			if (irv) {
-				setIsReplyFormVisible(false)
-				socket.emit('leave', room) 
-			} else
-				socket.emit('join', room)
-
-			return !irv
-		})
+		setIsRepliesVisible(irv => !irv)
+		if (!isRepliesVisible)
+			setIsReplyFormVisible(false)
 	}
-	
+
 	return {
+		replies,
 		xhtml,
 		xhtmlContainerRef,
 		isRepliesVisible,
 		isReplyFormVisible,
+		initComment,
+		updateReplies,
 		toggleReplies,
 		toggleReplyForm,
-		connectToReplies,
+		showRepliesAndForm,
 	}
 }

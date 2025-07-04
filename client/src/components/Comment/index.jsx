@@ -1,57 +1,45 @@
-import { HOST } from '#constants'
 
 import Header from './Header'
 import Files from './Files'
 import Replies from './Replies'
 import RepliesBtn from './RepliesBtn'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useComment } from '#hooks'
 
-export default function Comment({ socket, comment, updateComments }) {
+export default function Comment({ comment }) {
 	const {
+		replies,
 		xhtml,
 		xhtmlContainerRef,
 		isRepliesVisible,
 		isReplyFormVisible,
+		initComment,
+		updateReplies,
 		toggleReplies,
-		torggleReplyForm,
-		connectToReplies,
+		toggleReplyForm,
+		showRepliesAndForm
 	} = useComment(
-		socket,
-		comment,
-		updateComments
+		comment.id,
+		comment.text
 	)
 
-	// const [ replies, setReplies ] = useState([])
-
 	useEffect(() => {
-		if(xhtmlContainerRef.current) {
-			// const getReplies = async () => {
-			// 	const response = await fetch(`${HOST}/${comment.id}`)
-			// 	const data = await response.json()
-				
-			// 	for (let i = 0; i < data.length; i++)
-			// 		data[i] = [...comment.coords, i]
-
-			// 	setReplies(data)
-			// }
-			// getReplies()
-			
-			xhtmlContainerRef.current?.append(xhtml)
-		}
+		xhtmlContainerRef.current?.append(xhtml)
 	}, [xhtmlContainerRef.current])
 
+	useEffect(() => initComment(), [])
+
 	return (
-		<div className='my-5'>
+		<div className='mt-8 border-amber-50/10'>
 			<Header
 				user={comment.user}
 				date={new Date(comment.date)}
-				connectToReplies={connectToReplies}
+				showRepliesAndForm={showRepliesAndForm}
 			/>
 
 			<div
-				className='p-4 whitespace-pre-wrap wrap-break-word border-b border-amber-50/10'
+				className='p-4 whitespace-pre-wrap wrap-break-word border-x border-b border-amber-50/10'
 				ref={xhtmlContainerRef}
 			/>
 
@@ -61,23 +49,24 @@ export default function Comment({ socket, comment, updateComments }) {
 			/>
 
 			{
-				!!comment.replies?.length 
+				!!replies.length 
 				&& 
 				<RepliesBtn
-					repliesNumber={comment.replies.length}
+					repliesNumber={replies.length}
 					isRepliesVisible={isRepliesVisible}
 					toggleReplies={toggleReplies}
 				/>
 			}
 			{
-				isRepliesVisible 
+				isRepliesVisible
 				&& 
 				<Replies
-					socket={socket}
-					parent={comment}
+					replies={replies}
+					parentId={comment.id}
 					isReplyFormVisible={isReplyFormVisible}
-					updateComments={updateComments}
+					updateReplies={updateReplies}
 					toggleReplies={toggleReplies}
+					toggleReplyForm={toggleReplyForm}
 				/>
 			}
 		</div>

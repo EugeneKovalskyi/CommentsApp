@@ -1,6 +1,6 @@
 import { GRAPHQL } from '#constants'
 
-export default async (name, email, homePage) => {
+export default async (name, email, tocken, homePage) => {
 	const response = await fetch(GRAPHQL, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -10,6 +10,7 @@ export default async (name, email, homePage) => {
 					auth (data: {
 						name: "${name}",
 						email: "${email}",
+						tocken: "${tocken}",
 						homePage: "${homePage}"
 					}) {
 						id

@@ -1,35 +1,73 @@
+import { WS_HOST } from '#constants'
+
 import Comment from '.'
 import ReplyForm from './ReplyForm'
 
+import { useEffect, useMemo } from 'react'
+import { io } from "socket.io-client"
+
 export default function Replies({ 
-	socket,
-	parent,
+	replies,
+	parentId,
 	isReplyFormVisible,
-	updateComments,
-	toggleReplies
+	updateReplies,
+	toggleReplies,
+	toggleReplyForm
 }) {
+  const socket = useMemo(() => io(WS_HOST, { 
+		autoConnect: false, 
+		transports: ['websocket'] 
+	}), [])
+
+	useEffect(() => {
+		socket.on(`get:reply:${parentId}`, (reply) => {
+			updateReplies(draft => {
+				draft.push(reply)
+			})
+			console.log(reply)
+		})
+
+		socket.connect()
+
+		return () => {
+			socket.off(`get:reply:${parentId}`)
+			socket.disconnect()
+		}
+	}, [])
 
 	return (
-		<div className='ml-8 mt-6'>
-			{parent.replies.map((reply) => (
-				<Comment
-					socket={socket}
-					key={reply.id}
-					comment={reply}
-					updateComments={updateComments}
-				/>
-			))}
+		<div className='mt-8'>
+			<div className='ml-8'>
+				{replies.map((reply) => (
+					<Comment
+						key={reply.id}
+						comment={reply}
+					/>
+				))}
+			</div>
 
 			{
-				isReplyFormVisible
-				&&
+				isReplyFormVisible ?
 				<ReplyForm
 					socket={socket}
-					parent={parent}
-					updateComments={updateComments}
+					parentId={parentId}
+					updateReplies={updateReplies}
 					toggleReplies={toggleReplies}
+					toggleReplyForm={toggleReplyForm}
 				/>
+				:
+				replies.length ?
+				<button
+					className='mt-8 py-1 px-4 text-amber-50/70 border rounded-md  border-amber-50/50 cursor-pointer hover:bg-amber-50/10 transition-color duration-150'
+					onClick={toggleReplyForm}
+				>
+					Add reply
+				</button>
+				:
+				''
 			}
 		</div>
 	)
 }
+
+// border-amber-50/10

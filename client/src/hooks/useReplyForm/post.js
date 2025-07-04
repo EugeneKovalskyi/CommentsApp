@@ -1,7 +1,7 @@
 import { HOST } from '#constants'
 import { createFormDataFrom, getLocalAuth } from '#utils'
 
-export default async (socket, parent, text, uploadedFiles) => {
+export default async (socket, parentId, text, uploadedFiles) => {
 	const formData = createFormDataFrom({}, uploadedFiles)
 
 	const responseFiles = await fetch(`${HOST}/files`, {
@@ -12,7 +12,6 @@ export default async (socket, parent, text, uploadedFiles) => {
 	const { imgs, txts } = await responseFiles.json()
 	const user = getLocalAuth()
 	const userId = +user.id
-	const parentId = parent.id
 
 	const { id, date } = await socket.emitWithAck('post:reply', {
 		userId,
@@ -30,7 +29,6 @@ export default async (socket, parent, text, uploadedFiles) => {
 		imgs,
 		txts,
 		user,
-		coords: [...parent.coords, parent.replies.length],
 		replies: [],
 	}
 }

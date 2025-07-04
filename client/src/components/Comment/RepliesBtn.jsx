@@ -1,5 +1,6 @@
 import chevronDownSrc from '#public/chevron-down.svg'
 import chevronUpSrc from '#public/chevron-up.svg'
+import connectionSrc from '#public/connection.svg'
 
 export default function RepliesBtn({
   repliesNumber,
@@ -7,7 +8,7 @@ export default function RepliesBtn({
   toggleReplies,
 }) {
   return (
-    <div className='mt-4 ml-8'>
+    <div className='mt-2 ml-8'>
       <button
         className='text-amber-50/70 cursor-pointer hover:underline'
         onClick={toggleReplies}
@@ -19,6 +20,15 @@ export default function RepliesBtn({
         />
         Replies ( {repliesNumber} )
       </button>
+      {
+        isRepliesVisible
+        &&
+        <img 
+          className='inline ml-2 w-6'
+          src={connectionSrc} 
+          alt="connected" 
+        />
+      }
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { SITE_KEY } from '#constants'
 import clsx from 'clsx'
 import { primaryButton } from '#styles'
 
@@ -7,7 +8,7 @@ import { useAuthForm } from '#hooks'
 
 export default function Form({ updateComments }) {
   const {
-      formText,
+      text,
       uploadedFiles,
 			register,
 			errors,
@@ -46,20 +47,22 @@ export default function Form({ updateComments }) {
         placeholder='https://example.com/'
       />
 
-      {/* <Input 
-        title={ <img className='inline-block' alt="CAPTcha" />}
-        register={register}
-        name='captcha'
-        options={{ required: 'is required *' }}
-        error={errors.captcha}
-      /> */}
+      <div className='mx-auto mt-4 w-11/12 font-bold text-left'>
+        Captcha:
+        <div 
+          className='g-recaptcha mt-2' 
+          data-sitekey={SITE_KEY}
+          {...register('tocken')}
+        />
+      </div>
 
       <div className='block mx-auto mt-4 w-11/12 text-left'>
         <span className='font-bold'>Text:</span>
         <div className='mt-2'>
           <Textarea
             styleType='comment'
-            formText={formText}
+            isAutofocus={false}
+            text={text}
             uploadedFiles={uploadedFiles}
             register={register}
             error={errors.text}

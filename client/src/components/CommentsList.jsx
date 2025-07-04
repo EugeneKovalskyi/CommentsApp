@@ -1,53 +1,49 @@
 import { MAX_COMMENTS } from '#constants'
-
 import clsx from 'clsx'
 import { primaryButton } from '#styles'
 
 import Tools from './Tools'
 import Comment from './Comment'
-
-import { useState } from 'react'
 import { useTools } from '#hooks'
 
 export default function CommentsList({ 
-  socket, 
-  comments, 
+  comments,
+  commentsCount,
   updateComments 
 }) {
-	const [ commentsShown, setCommentsShown ] = useState(MAX_COMMENTS)
-  const { 
-		sortingCriterion, 
-		isDescSorting, 
-		handleSortComments, 
-		handleChangeOrder 
+  const {
+    criterion,
+    order,
+    commentsShown,
+    sortComments,
+    orderComments,
+    addMoreComments
 	} = useTools(updateComments)
 
   return (
-    <div className='relative mx-auto mt-12 pb-3 w-full 2xl:w-1/2 border-2 border-amber-50/50 rounded-md bg-amber-50/20'>
+    <div className='relative mx-auto mt-12 pb-8 w-full 2xl:w-1/2 border-2 border-amber-50/50 rounded-md bg-amber-50/20'>
       <Tools
-        sortingCriterion={sortingCriterion}
-        isDescSorting={isDescSorting}
-        handleSortComments={handleSortComments}
-        handleChangeOrder={handleChangeOrder}
+        criterion={criterion}
+        order={order}
+        sortComments={sortComments}
+        orderComments={orderComments}
       />
 
-      <div className='mt-8 mb-5 mx-5'>
+      <div className='mt-8 px-8'>
         {comments.slice(0, commentsShown).map((comment) => 
           <Comment
-            socket={socket}
             key={comment.id}
             comment={comment}
-            updateComments={updateComments}
           />
         )}
       </div>
 
       {
-        commentsShown < comments.length
+        commentsShown < commentsCount
         &&
         <button
           className={clsx('block mx-auto mt-8', primaryButton)}
-          onClick={() => setCommentsShown(cs => cs + 25)}
+          onClick={addMoreComments}
         >
           + {MAX_COMMENTS} comments
         </button>

@@ -4,6 +4,7 @@ import { getFiles } from '#utils'
 
 export default () => {
 	const [ uploadedFiles, setUploadedFiles] = useImmer({imgs: [], txts: []})
+	const resetUploadedFiles = () => setUploadedFiles({imgs: [], txts: []})
 
 	const updateUploadedFiles = async (files) => {
   	try {
@@ -21,6 +22,7 @@ export default () => {
 
 	return {
 		uploadedFiles,
-		updateUploadedFiles
+		updateUploadedFiles,
+		resetUploadedFiles
 	}
 }

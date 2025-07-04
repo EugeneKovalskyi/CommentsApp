@@ -11,7 +11,6 @@ export default (updateComments) => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: 'onBlur',
 		defaultValues: {
 			name: localStorage.getItem('name'),  
 			email: localStorage.getItem('email'),
@@ -19,19 +18,25 @@ export default (updateComments) => {
 		},
 	})
 
-	const { uploadedFiles, updateUploadedFiles } = useUploadFiles()
-	const formText = watch('text')
+	const { 
+		uploadedFiles, 
+		updateUploadedFiles, 
+		resetUploadedFiles
+	} = useUploadFiles()
+	const text = watch('text', '')
 	const updateText = (value) => setValue('text', value)
 
 	const addComment = async (form) => {
 		const comment = await post(form, uploadedFiles)
 
+		updateText('')
+    resetUploadedFiles()
 		updateComments((draft) => { draft.unshift({ ...comment }) })
 		localAuth(comment.user)
 	}
 
 	return {
-		formText,
+		text,
 		uploadedFiles,
 		register,
 		errors,

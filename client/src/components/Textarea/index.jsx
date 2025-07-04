@@ -13,6 +13,7 @@ import { getXhtmlFromText, addTagToTextarea } from '#utils'
 
 export default function Textarea({
   styleType,
+  isAutofocus,
   text,
   uploadedFiles,
   register,
@@ -61,7 +62,7 @@ export default function Textarea({
         ?
         <TextareaAutosize
           className='px-2 py-1 w-full min-h-15 resize-none border rounded-b-sm bg-amber-50/10 hover:bg-amber-50/20'
-          autoFocus
+          autoFocus={isAutofocus}
           placeholder='Enter your text...'
           {...register('text', { required: styleType === 'comment' ? 'is required *' :  'Text is required *'})}
           ref={(elem) => {

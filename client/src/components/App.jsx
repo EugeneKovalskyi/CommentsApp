@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { useApp } from '#hooks'
 
 export default function App() {
-	const { socket, comments, updateComments, initApp } = useApp()
+	const { comments, commentsCount, updateComments, initApp } = useApp()
   
 	useEffect(() => initApp(), [])
 
@@ -14,8 +14,8 @@ export default function App() {
 			<Form updateComments={updateComments} />
 
 			<CommentsList
-				socket={socket}
 				comments={comments}
+				commentsCount={commentsCount}
 				updateComments={updateComments}
 			/>
 		</div>

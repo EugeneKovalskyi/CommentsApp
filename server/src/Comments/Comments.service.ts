@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/Prisma.service';
 import { Comment } from '@prisma/client';
 import type { PostCommentDTO, PostCommentFiles } from './Comment.dto';
+import type { QueryParams } from 'src/types/app.types';
 
 @Injectable()
 export class CommentsService {
@@ -45,37 +46,32 @@ export class CommentsService {
     return comment
   }
 
-  async getMainComments() {
-    const comments = await this.prismaService.comment.findMany({
+  async getMainComments(queryParams: QueryParams) {
+    const { orderBy, shown } = queryParams
+
+    const count = await this.prismaService.comment.count({
       where: {
         parentId: null
+      }
+    })
+    const comments = await this.prismaService.comment.findMany({
+      where: {
+        parentId: null,
       },
       
-      orderBy: {
-        date: 'desc'
-      },
+      orderBy,
 
+      skip: shown || 0,
       take: 25,
 
       include: {
         user: true,
         imgs: true,
         txts: true,
-        replies: {
-          include: {
-            imgs: true,
-            txts: true,
-            user: true
-
-          },
-          orderBy: {
-            date: 'asc'
-          }
-        },
-      },
+      }
     })
 
-    return comments
+    return { comments, count }
   }
 
   async getReplies(parentId: number) {
@@ -85,7 +81,9 @@ export class CommentsService {
       },
 
       include: {
-        user: true
+        user: true,
+        imgs: true, 
+        txts: true
       }
     })
 

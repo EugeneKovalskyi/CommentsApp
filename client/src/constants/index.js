@@ -1,6 +1,7 @@
 export const HOST = 'http://localhost:3001'
 export const GRAPHQL = HOST + '/graphql'
 export const WS_HOST = 'ws://localhost:3001'
+export const SITE_KEY = '6LeCuHcrAAAAAPTLolXNk0ywiwPU3vBuHriP7Jrd'
 export const MAX_COMMENTS = 25
 export const MAX_TAGS_NESTING_DEPTH = 5
 export const MAX_FILES_NUMBER = 5

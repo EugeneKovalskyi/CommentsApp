@@ -3,18 +3,23 @@ import { IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from 'class-vali
 
 @InputType()
 export class AuthInput {
-	@Field({description: 'User name'})
+	@Field({ description: 'User name' })
 	@IsNotEmpty()
 	@IsString()
 	@MaxLength(128)
 	name: string
 
-	@Field({description: 'User email'})
+	@Field({ description: 'User email' })
 	@IsString()
 	@IsNotEmpty()
 	@MaxLength(128)
 	@Matches(/^[a-zA-Z][\w.]+?@\w+?\.\w+$/i)
 	email: string
+
+	@Field({ description: 'CAPTCHA-tocken' })
+	@IsString()
+	@IsNotEmpty()
+	tocken: string
 
 	@Field({ nullable: true, description: 'User home page' })
 	@IsString()

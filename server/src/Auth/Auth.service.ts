@@ -23,9 +23,12 @@ export class AuthService {
 					data: {
 						name,
 						email,
-						homePage,
+						homePage
 					},
-					select: { id: true },
+					
+					select: { 
+						id: true 
+					}
 				})
 			)
 

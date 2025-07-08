@@ -1,7 +1,7 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class Auth {
-	@Field(() => ID, { description: 'User ID' })
+	@Field(() => Number, { description: 'User id' })
 	id: number
 }

@@ -19,5 +19,5 @@ interface IOrderByUserEmail {
 }
 export interface QueryParams {
 	orderBy: IOrderByDate | IOrderByUserName | IOrderByUserEmail
-	shown?: number
+	lastId: number | undefined
 }

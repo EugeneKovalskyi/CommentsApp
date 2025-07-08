@@ -3,23 +3,23 @@ import { CommentsQuery } from 'src/Comments/Comment.dto';
 
 @Injectable()
 export class CommentsQueryPipe implements PipeTransform {
-	transform(value: CommentsQuery) {
-		if (value.criterion === 'date') 
+	transform({ criterion, order, lastId }: CommentsQuery) {
+		if (criterion === 'date') 
 			return {
 				orderBy: {
-					date: value.order
+					date: order
 				},
-				shown: Number(value.shown)
+				lastId: Number(lastId) || undefined
 			}
 			
-		else if (value.criterion === 'name' || value.criterion === 'email')
+		else if (criterion === 'name' || criterion === 'email')
 			return {
 				orderBy: {
 					user: {
-						[value.criterion]: value.order
+						[criterion]: order
 					}
 				},
-				shown: Number(value.shown)
+				lastId: Number(lastId) || undefined
 			}
 	}
 }

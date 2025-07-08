@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { useRef } from 'react'
 import { useUploadFiles } from '#hooks'
 import { localAuth } from '#utils'
 import post from './post'
@@ -6,6 +7,8 @@ import post from './post'
 export default (updateComments) => {
 	const {
 		register,
+		setError,
+		clearErrors,
 		setValue,
 		watch,
 		handleSubmit,
@@ -15,7 +18,7 @@ export default (updateComments) => {
 			name: localStorage.getItem('name'),  
 			email: localStorage.getItem('email'),
 			homePage: localStorage.getItem('homePage') 
-		},
+		}
 	})
 
 	const { 
@@ -23,26 +26,40 @@ export default (updateComments) => {
 		updateUploadedFiles, 
 		resetUploadedFiles
 	} = useUploadFiles()
+	const reCaptchaRef = useRef(null)
 	const text = watch('text', '')
 	const updateText = (value) => setValue('text', value)
-
-	const addComment = async (form) => {
-		const comment = await post(form, uploadedFiles)
-
-		updateText('')
-    resetUploadedFiles()
-		updateComments((draft) => { draft.unshift({ ...comment }) })
-		localAuth(comment.user)
+	const updateToken = (token) => {
+		clearErrors('token')
+		setValue('token', token)
 	}
 
+	const addComment = async (form) => {
+		if (!form.token) {
+			setError('token', { message: 'is required *' })
+			return``
+		}
+
+		const comment = await post(form, uploadedFiles)
+
+		reCaptchaRef.current.reset()
+		setValue('token', '')
+		updateText('')
+		resetUploadedFiles()
+		updateComments(draft => { draft.unshift({ ...comment }) })
+		localAuth(comment.user)
+	}
+		
 	return {
 		text,
+		reCaptchaRef,
 		uploadedFiles,
 		register,
 		errors,
 		updateText,
 		updateUploadedFiles,
 		handleSubmit,
+		updateToken,
 		addComment,
 	}
 }

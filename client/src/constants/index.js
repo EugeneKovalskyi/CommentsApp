@@ -1,6 +1,7 @@
-export const HOST = 'http://localhost:3001'
+export const PORT = 4001
+export const HOST = 'http://localhost:' + PORT
 export const GRAPHQL = HOST + '/graphql'
-export const WS_HOST = 'ws://localhost:3001'
+export const WS_HOST = 'ws://localhost:' + PORT
 export const SITE_KEY = '6LeCuHcrAAAAAPTLolXNk0ywiwPU3vBuHriP7Jrd'
 export const MAX_COMMENTS = 25
 export const MAX_TAGS_NESTING_DEPTH = 5
@@ -30,7 +31,3 @@ export const TEXTAREA_BUTTONS = [
 		attributes: ' href="" title=""'
 	}
 ]
-
-const test = `Start. <strong>Hello</strong> <i>my</i> <code>let name = 'Eugene'</code>, here is my <a href='https://github.com/EugeneKovalskyi' title="GitHub">GitHub</a>.
-<strong>I learn <code>JavaScript</code> 2 years.</strong>
-<script>It's XSS</script>. End.`

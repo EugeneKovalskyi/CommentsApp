@@ -5,9 +5,15 @@ import { useEffect } from 'react'
 import { useApp } from '#hooks'
 
 export default function App() {
-	const { comments, commentsCount, updateComments, initApp } = useApp()
+	const {
+		comments,
+		commentsCount,
+		updateComments,
+		updateCommentsCount,
+		initApp
+	} = useApp()
   
-	useEffect(() => initApp(), [])
+	useEffect(() => { initApp() }, [])
 
 	return (
 		<div className='p-10 text-amber-50'>
@@ -17,6 +23,7 @@ export default function App() {
 				comments={comments}
 				commentsCount={commentsCount}
 				updateComments={updateComments}
+				updateCommentsCount={updateCommentsCount}
 			/>
 		</div>
 	)

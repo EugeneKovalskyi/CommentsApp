@@ -9,8 +9,10 @@ import { useTools } from '#hooks'
 export default function CommentsList({ 
   comments,
   commentsCount,
-  updateComments 
+  updateComments,
+  updateCommentsCount
 }) {
+  const lastId = comments[comments.length - 1]?.id
   const {
     criterion,
     order,
@@ -18,7 +20,7 @@ export default function CommentsList({
     sortComments,
     orderComments,
     addMoreComments
-	} = useTools(updateComments)
+	} = useTools(lastId, updateComments, updateCommentsCount)
 
   return (
     <div className='relative mx-auto mt-12 pb-8 w-full 2xl:w-1/2 border-2 border-amber-50/50 rounded-md bg-amber-50/20'>
@@ -30,7 +32,7 @@ export default function CommentsList({
       />
 
       <div className='mt-8 px-8'>
-        {comments.slice(0, commentsShown).map((comment) => 
+        {comments.map((comment) => 
           <Comment
             key={comment.id}
             comment={comment}

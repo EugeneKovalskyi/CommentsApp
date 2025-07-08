@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { Comment } from '@prisma/client'
-import { PrismaService } from 'src/prisma/Prisma.service'
+import { PrismaService } from 'src/Prisma/Prisma.service'
 import type { PostReplyDTO } from './Reply.dto'
 
 @Injectable()

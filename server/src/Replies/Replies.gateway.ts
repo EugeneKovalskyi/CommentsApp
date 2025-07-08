@@ -31,20 +31,4 @@ export class RepliesGateway implements OnGatewayConnection, OnGatewayDisconnect 
 			date: reply.date
 		}
 	}
-
-	// @SubscribeMessage('join')
-	// async joinRoom(
-	// 	@ConnectedSocket() client: Socket,
-	// 	@MessageBody() room: string) {
-	// 		await client.join(room)
-	// 		console.log(client.rooms)
-	// }
-
-	// @SubscribeMessage('leave')
-	// async leaveRoom(
-	// 	@ConnectedSocket() client: Socket,
-	// 	@MessageBody() room: string) {
-	// 		await client.leave(room)
-	// 		console.log(client.rooms)
-	// }
 }

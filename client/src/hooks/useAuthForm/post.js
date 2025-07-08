@@ -3,11 +3,11 @@ import auth from './auth'
 import { createFormDataFrom } from '#utils'
 
 export default async (form, files) => {
-	const { name, email, tocken, homePage, text } = form
-	const userId = await auth(name, email, tocken, homePage)
+	const { name, email, token, homePage, text } = form
+	const userId = await auth(name, email, token, homePage)
 	
 	const formData = createFormDataFrom(form, files)
-	formData.delete('tocken')
+	formData.delete('token')
 	formData.append('userId', userId)
 
 	const response = await fetch(HOST, {

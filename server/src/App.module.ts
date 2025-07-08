@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver } from '@nestjs/apollo'
-import { PrismaModule } from './prisma/Prisma.module'
+import { PrismaModule } from './Prisma/Prisma.module'
 import { AuthModule } from './Auth/Auth.module'
 import { CommentsModule } from './Comments/Comments.module';
 import { RepliesModule } from './Replies/Replies.module';

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/prisma/Prisma.service'
+import { PrismaService } from 'src/Prisma/Prisma.service'
 import { AuthInput } from './inputs/Auth.input'
 import { Auth } from './models/Auth'
 

@@ -16,10 +16,10 @@ export class AuthInput {
 	@Matches(/^[a-zA-Z][\w.]+?@\w+?\.\w+$/i)
 	email: string
 
-	@Field({ description: 'CAPTCHA-tocken' })
+	@Field({ description: 'CAPTCHA-token' })
 	@IsString()
 	@IsNotEmpty()
-	tocken: string
+	token: string
 
 	@Field({ nullable: true, description: 'User home page' })
 	@IsString()

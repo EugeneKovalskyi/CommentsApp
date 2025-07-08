@@ -4,17 +4,20 @@ import { primaryButton } from '#styles'
 
 import Input from './Input'
 import Textarea from '#components/Textarea'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useAuthForm } from '#hooks'
 
 export default function Form({ updateComments }) {
   const {
       text,
+      reCaptchaRef,
       uploadedFiles,
 			register,
 			errors,
 			updateText,
       updateUploadedFiles,
       handleSubmit,
+      updateToken,
 			addComment
 		} = useAuthForm(updateComments)
 
@@ -47,12 +50,17 @@ export default function Form({ updateComments }) {
         placeholder='https://example.com/'
       />
 
-      <div className='mx-auto mt-4 w-11/12 font-bold text-left'>
-        Captcha:
-        <div 
-          className='g-recaptcha mt-2' 
-          data-sitekey={SITE_KEY}
-          {...register('tocken')}
+      <div className='mx-auto mt-4 w-11/12 text-left'>
+        <span className='font-bold'>ReCAPTCHA:</span>
+        {errors.token && <span className='ml-2 text-red-300'>
+          {errors.token.message}
+        </span>}
+        <ReCAPTCHA 
+          className='mt-2' 
+          sitekey={SITE_KEY}
+          ref={reCaptchaRef}
+          name='token'
+          onChange={updateToken}
         />
       </div>
 

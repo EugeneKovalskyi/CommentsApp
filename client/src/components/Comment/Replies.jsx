@@ -1,10 +1,7 @@
-import { WS_HOST } from '#constants'
-
 import Comment from '.'
+import { useReplies } from '#hooks'
 import ReplyForm from './ReplyForm'
-
-import { useEffect, useMemo } from 'react'
-import { io } from "socket.io-client"
+import { useEffect } from 'react'
 
 export default function Replies({ 
 	replies,
@@ -14,26 +11,10 @@ export default function Replies({
 	toggleReplies,
 	toggleReplyForm
 }) {
-  const socket = useMemo(() => io(WS_HOST, { 
-		autoConnect: false, 
-		transports: ['websocket'] 
-	}), [])
 
-	useEffect(() => {
-		socket.on(`get:reply:${parentId}`, (reply) => {
-			updateReplies(draft => {
-				draft.push(reply)
-			})
-			console.log(reply)
-		})
+	const { socket, initReplies } = useReplies(parentId, updateReplies)
 
-		socket.connect()
-
-		return () => {
-			socket.off(`get:reply:${parentId}`)
-			socket.disconnect()
-		}
-	}, [])
+	useEffect(() => { initReplies() }, [])
 
 	return (
 		<div className='mt-8'>
@@ -69,5 +50,3 @@ export default function Replies({
 		</div>
 	)
 }
-
-// border-amber-50/10

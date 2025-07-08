@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 type Auth {
-  """User ID"""
-  id: ID!
+  """User id"""
+  id: Float!
 }
 
 input AuthInput {
@@ -17,13 +17,13 @@ input AuthInput {
   """User name"""
   name: String!
 
-  """CAPTCHA-tocken"""
-  tocken: String!
+  """CAPTCHA-token"""
+  token: String!
 }
 
 type Mutation {
   """Return user id and register user if not exists."""
-  auth(data: AuthInput!): Auth!
+  auth(user: AuthInput!): Auth!
 }
 
 type Query {

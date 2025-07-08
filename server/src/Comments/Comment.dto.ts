@@ -1,5 +1,5 @@
 import type { IFile } from 'src/types/app.types'
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
+import { IsArray, IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class PostCommentDTO{
@@ -33,8 +33,7 @@ export class CommentsQuery {
 	@IsNotEmpty()
 	order: string
 
-	@Type(() => Number)
 	@IsNumber()
 	@IsOptional()
-	shown?: number
+	lastId?: number
 }

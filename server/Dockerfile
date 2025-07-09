@@ -8,6 +8,7 @@ WORKDIR /server
 COPY . .
 
 RUN npm i && \
+		npx prisma generate && \
 		npx prisma db push && \
 		npm run build
 

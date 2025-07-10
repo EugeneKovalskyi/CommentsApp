@@ -12,7 +12,7 @@ import { RepliesModule } from './Replies/Replies.module';
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: ['.env', 'env.secret']
+			envFilePath: ['.env', '.env.secret']
 		}),
 		GraphQLModule.forRoot({
 			driver: ApolloDriver,

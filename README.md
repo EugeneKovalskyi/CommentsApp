@@ -20,7 +20,7 @@
 ## Инструкция по запуску приложения в Docker  
 1. Скачать репозиторий:  
   `git clone https://github.com/EugeneKovalskyi/CommentsApp.git`   
-2. Создать в папке server файл .env с содержанием:  
+2. Создать в папке server файл .env.secret с переменными:  
   - `RECAPTCHA_URL`
   - `RECAPTCHA_SECRET_KEY`
   - `AWS_S3_REGION`
@@ -39,12 +39,12 @@
 1. Скачать репозиторий:  
   `git clone https://github.com/EugeneKovalskyi/CommentsApp.git`  
 2. В папке server :
-  - выполнить п.3 "Инструкции по запуску приложения в Docker"
-  - `npm i`               - установить зависимости
+  - выполнить п. 2 "Инструкции по запуску приложения в Docker"
+  - `npm i` - установить зависимости
   - `npx prisma generate` - сгенерировать prisma-типы  
-  - `npx prisma db push`  - сгенерировать файл БД
-  - `npm run start:dev`   - запустить сервер в dev-режиме
+  - `npx prisma db push` - сгенерировать файл БД
+  - `npm run start:dev` - запустить сервер в dev-режиме
 3. В папке client:
-  - `npm i`       - установить зависимости
+  - `npm i` - установить зависимости
   - `npm run dev` - запустить клиент в dev-режиме
   

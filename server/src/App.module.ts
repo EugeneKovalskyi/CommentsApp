@@ -11,7 +11,8 @@ import { RepliesModule } from './Replies/Replies.module';
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			isGlobal: true
+			isGlobal: true,
+			envFilePath: ['.env', 'env.secret']
 		}),
 		GraphQLModule.forRoot({
 			driver: ApolloDriver,

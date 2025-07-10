@@ -32,6 +32,7 @@ export default function Form({ updateComments }) {
         name={'name'}
         options={{ required: 'is required *' }}
         error={errors.name}
+        placeholder='Enter your name'
       />
 
       <Input 

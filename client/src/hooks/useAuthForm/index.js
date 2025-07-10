@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useRef } from 'react'
 import { useUploadFiles } from '#hooks'
-import { localAuth } from '#utils'
 import post from './post'
 
 export default (updateComments) => {
@@ -47,7 +46,6 @@ export default (updateComments) => {
 		updateText('')
 		resetUploadedFiles()
 		updateComments(draft => { draft.unshift({ ...comment }) })
-		localAuth(comment.user)
 	}
 		
 	return {

@@ -1,4 +1,5 @@
 import { GRAPHQL } from '#constants'
+import { localAuth } from '#utils'
 
 export default async (name, email, token, homePage) => {
 		const response = await fetch(GRAPHQL, {
@@ -19,6 +20,8 @@ export default async (name, email, token, homePage) => {
 			}),
 		})
 		const id = (await response.json()).data.auth.id
+
+		localAuth(id, name, email, homePage)
 
 		return id
 }

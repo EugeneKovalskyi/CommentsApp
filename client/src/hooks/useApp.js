@@ -1,8 +1,6 @@
 import { HOST } from '#constants'
-
 import { useImmer } from 'use-immer'
 import { useState } from 'react'
-import { localAuth } from '#utils'
 
 export default () => {
 	const [ comments, updateComments ] = useImmer([])
@@ -19,7 +17,6 @@ export default () => {
     }
 
 		getMainComments()
-    localAuth()
 	}
 
 	return {

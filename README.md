@@ -23,24 +23,15 @@
 2. Установить Docker по инструкции:  
   `https://docs.docker.com/engine/install/`  
 3. Создать в папке server файл .env с содержанием:  
-
   `DATABASE_URL=file:../../db.db  
-
-   RECAPTCHA_URL=https://www.google.com/recaptcha/api/siteverify  
-
-   RECAPTCHA_SECRET_KEY=*{Приватный ключ reCAPTCHA}*  
-
-   AWS_S3_REGION=*{Приватные данные AWS S3}*  
-
-   AWS_SECRET_ACCESS_KEY=*{Приватные данные AWS S3}*  
-
-   AWS_ACCESS_KEY_ID=*{Приватные данные AWS S3}*  
-
-   AWS_BUCKET_NAME=*{Приватные данные AWS S3}*  
-
-   MAX_IMG_SIZE=10485760  
-   
-   MAX_TXT_SIZE=102400`  
+  RECAPTCHA_URL=https://www.google.com/recaptcha/api/siteverify    
+  RECAPTCHA_SECRET_KEY=*{Приватный ключ reCAPTCHA}*    
+  AWS_S3_REGION=*{Приватные данные AWS S3}*    
+  AWS_SECRET_ACCESS_KEY=*{Приватные данные AWS S3}*    
+  AWS_ACCESS_KEY_ID=*{Приватные данные AWS S3}*    
+  AWS_BUCKET_NAME=*{Приватные данные AWS S3}*    
+  MAX_IMG_SIZE=10485760    
+  MAX_TXT_SIZE=102400`    
 4. В папке CommentsApp вызвать комманду:  
   `docker compose up -d --build`  
 5. Открыть в браузере http://localhost  

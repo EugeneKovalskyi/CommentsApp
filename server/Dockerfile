@@ -7,7 +7,9 @@ WORKDIR /server
 
 COPY . .
 
-RUN npm i && \
+RUN apt-get update && \
+		apt-get install -y openssl && \
+		npm i && \
 		npx prisma generate && \
 		npx prisma db push && \
 		npm run build

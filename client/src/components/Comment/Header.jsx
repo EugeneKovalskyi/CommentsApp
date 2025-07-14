@@ -79,9 +79,12 @@ function Email({ email }) {
       <span
         className='px-1.5 py-1 rounded-md text-amber-50/70 cursor-pointer hover:bg-amber-50/10'
         onClick={() => {
-          navigator.clipboard.writeText(email)
-          setIsEmailPopup(true)
-          setTimeout(() => setIsEmailPopup(false), 1500)
+          if (navigator?.clipboard) {
+            navigator.clipboard.writeText(email)
+            setIsEmailPopup(true)
+            setTimeout(() => setIsEmailPopup(false), 1500)
+          } else 
+            console.warn('>>> window.navigator not found <<<')
         }}
       >
         @
@@ -89,4 +92,3 @@ function Email({ email }) {
     </>
   )
 }
-
